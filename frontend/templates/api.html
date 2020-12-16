@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumo de Api</title>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    
+
+    <!-- MD Bootstrap CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href=" {% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+
+</head>
+<body>
+    <header class="sticky-top w-100">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark align-middle">
+            <a class="navbar-brand mb-0 h1" href="/">
+                <!-- <img src="/docs/4.5/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy"> -->
+                PC-Shop
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <div class="navbar-nav mr-auto">
+                    <a class="nav-item nav-link" href="http://localhost:8000/shop/">Tienda</a>
+                    <a class="nav-item nav-link" href="http://localhost:8000/gallery/">Galeria</a>
+                    <a class="nav-item nav-link" href="http://localhost:8000/verproducto/">Productos</a>
+                    <a class="nav-item nav-link" href="http://localhost:8000/contact/">Informacion</a>
+                    <a class="nav-item nav-link" href="http://localhost:8000/api/">API</a>
+                </div>
+                <div>
+                    <a class="btn btn-primary py-2 px-2 my-2 mx-2 mb-0" data-toggle="modal" data-target="#modalLoginForm">Login</a>
+                    <a class="btn btn-primary float-left py-2 px-2 my-2 mx-2 mb-0" data-toggle="modal" data-target="#modalRegisterForm">Register</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- inicio tabla categoria-->
+    
+
+    <table class="table table-stripped" id="tablaCategoria">
+        <tr>
+            <th>ID Categoria</th>
+            <th>Nombre categoria</th>
+        </tr>
+    </table>
+    <button type="button" name="botonCategoria" id="botonCategoria" class="btn btn-primary">Llama api</button>
+    <!-- fin tabla categoria -->
+
+
+    <!-- inicio tabla marca-->
+
+    <table class="table table-stripped" id="tablaMarca">
+        <tr>
+            <th>ID Marca</th>
+            <th>Nombre marca</th>
+        </tr>
+    </table>
+    <button type="button" name="botonMarca" id="botonMarca" class="btn btn-primary">Llama api</button>
+    <!-- fin tabla marca -->
+
+
+    <!-- inicio tabla producto -->
+    
+
+    <table class="table table-stripped" id="tablaProducto">
+        <tr>
+            <th>ID Producto</th>
+            <th>Nombre producto</th>
+            <th>descripcion producto</th>
+            <th>Stock producto</th>
+            <th>mod producto</th>
+            <th>precio producto</th>
+            <th>fecha registro</th>
+            <th>categoria</th>
+            <th>Marca</th>
+            
+        </tr>
+    </table>
+
+    <button type="button" name="botonProducto" id="botonProducto" class="btn btn-primary">Llama api</button>
+    <!-- fin tabla producto -->
+
+
+    <!--jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+
+    <!-- script tabla categoria-->
+    <script>
+        $(document).ready(function(){
+           $('#botonCategoria').click(function(){
+               $.getJSON("http://localhost:8000/API/v1/Categoria/",
+               function(data)
+               {
+                    var fila='';
+                    $.each(data, function(key, value)
+                    {
+                        fila+='<tr>';
+                        fila+='<td>';
+                        fila += value.idCategoria;
+                        fila+='</td>';
+                        fila+='<td>';
+                        fila += value.nomCategoria;
+                        fila+='</td>';
+                        fila +='</tr>';
+
+                    });
+                    $('#tablaCategoria').append(fila);
+               });
+           });
+        });
+    </script>
+
+
+    <!-- script tabla marca-->
+    <script>
+        $(document).ready(function(){
+            $('#botonMarca').click(function(){
+                $.getJSON("http://localhost:8000/API/v1/Marca/",
+                function(data)
+                {
+                    var fila='';
+                    $.each(data, function(key, value)
+                    {
+                        fila+='<tr>';
+                        fila+='<td>';
+                        fila += value.idMarca;
+                        fila+='</td>';
+                        fila+='<td>';
+                        fila += value.nomMarca;
+                        fila+='</td>';
+                        fila +='</tr>';
+
+                    });
+                    $('#tablaMarca').append(fila);
+                });
+            });
+        });
+    </script>
+
+    <!-- script tabla producto-->
+    <script>
+        $(document).ready(function(){
+            $('#botonProducto').click(function(){
+                $.getJSON("http://localhost:8000/API/v1/Producto/",
+                function(data)
+                {
+                    var fila='';
+                    $.each(data, function(key, value)
+                    {
+                        fila+='<tr>';
+                        fila+='<td>';
+                        fila += value.idProducto;
+                        fila+='</td>';
+                        fila+='<td>';
+                        fila += value.nomProducto;
+                        fila+='</td>';
+                        fila+='<td>';
+                        fila += value.desProducto;
+                        fila+='</td>';
+                        fila+='<td>';
+                        fila += value.stockProducto;
+                        fila+='</td>';
+                        fila+='<td>';
+                        fila += value.modProducto;
+                        fila+='</td>';
+                        fila+='<td>';
+                        fila += value.preProducto;
+                        fila+='</td>';
+                        fila+='<td>';
+                        fila += value.fecregProducto;
+                        fila+='</td>';
+                        fila+='<td>';
+                        fila += value.categoria;
+                        fila+='</td>';
+                        fila+='<td>';
+                        fila += value.marca;
+                        fila+='</td>';
+                   
+
+                    });
+                    $('#tablaProducto').append(fila);
+                });
+            });
+        });
+    </script>
+    
+</body>
+</html>
